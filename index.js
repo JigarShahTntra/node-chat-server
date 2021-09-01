@@ -3,8 +3,7 @@ const Redis = require("ioredis");
 const redisClient = new Redis();
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "http://localhost:8080",
-    origin: "http://localhost:3000"
+    origin: "http://65.0.11.205"
   },
   adapter: require("socket.io-redis")({
     pubClient: redisClient,
