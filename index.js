@@ -96,6 +96,16 @@ io.on("connection", async (socket) => {
     messageStore.saveMessage(message);
   });
 
+  socket.on("share message", ({ content, type }) => {
+    const message = {
+      type,
+      content,
+      from: socket.userID,
+    };
+    socket.to(socket.sessionID).emit("share message", message);
+    messageStore.saveMessage(message);
+  });
+
   // notify users upon disconnection
   socket.on("disconnect", async () => {
     const matchingSockets = await io.in(socket.sessionID).allSockets();
