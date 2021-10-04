@@ -106,6 +106,14 @@ io.on("connection", async (socket) => {
     messageStore.saveMessage(message);
   });
 
+  socket.on("delete channel", ({ deleted }) => {
+    const message = {
+      deleted,
+      from: socket.userID
+    };
+    socket.to(socket.sessionID).emit("delete channel", message);
+  });
+
   // notify users upon disconnection
   socket.on("disconnect", async () => {
     const matchingSockets = await io.in(socket.sessionID).allSockets();
